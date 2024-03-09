@@ -4,6 +4,6 @@
     <!-- confirm sms code fragment -->
     <string name="title_confirm_sms">Введите код,\nполученный из SMS</string>
     <string name="resend_sms_code">Отправить код повторно</string>
-    <string name="timer_sms_code">Отправить код повторно через:</string>
+    <string name="timer_sms_code">Отправить код повторно через</string>
     <string name="error_sms_code">Код неверный, проверьте введенные данные</string>
 </resources>

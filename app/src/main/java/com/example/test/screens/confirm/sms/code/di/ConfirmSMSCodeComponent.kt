@@ -7,7 +7,8 @@ import com.example.test.screens.confirm.sms.code.ConfirmSMSCodeFragment
 @ConfirmSMSCodeScope
 @Component(
     modules = [
-        ConfirmSMSCodeBindModule::class
+        ConfirmSMSCodeBindModule::class,
+        ConfirmSMSCodeProvideModule::class
     ],
     dependencies = [AppComponent::class]
 )

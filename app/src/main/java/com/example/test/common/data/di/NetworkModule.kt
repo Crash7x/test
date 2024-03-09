@@ -57,7 +57,8 @@ class NetworkModule {
         kotlinConverterFactory: Converter.Factory
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl("")
+            //Так как домен не был дан, оставил stub
+            .baseUrl("http://test/v1/")
             .client(okHttpClient)
             .addConverterFactory(kotlinConverterFactory)
             .build()
