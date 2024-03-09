@@ -2,6 +2,8 @@ package com.example.test.screens.confirm.sms.code
 
 import androidx.lifecycle.ViewModel
 import com.example.test.common.extensions.launchOrError
+import com.example.test.common.observable.toolbar.ToolbarFlow
+import com.example.test.common.observable.toolbar.model.ToolbarData
 import com.example.test.screens.confirm.sms.code.domain.managers.TimerManager
 import com.example.test.screens.confirm.sms.code.domain.model.TimerState
 import com.example.test.screens.confirm.sms.code.domain.usecase.ResentCodeUseCase
@@ -14,7 +16,8 @@ import kotlinx.coroutines.flow.onCompletion
 
 class ConfirmSMSCodeViewModel @AssistedInject constructor(
     private val timerManager: TimerManager,
-    private val resentCodeUseCase: ResentCodeUseCase
+    private val resentCodeUseCase: ResentCodeUseCase,
+    private val toolbarFlow: ToolbarFlow
 ) : ViewModel() {
 
     private val _timerState = MutableStateFlow<TimerState>(TimerState.Start(0.toTimer()))
@@ -22,6 +25,10 @@ class ConfirmSMSCodeViewModel @AssistedInject constructor(
 
     init {
         startTimer()
+    }
+
+    fun setupToolbar(title: String) {
+        toolbarFlow.tryEmit(ToolbarData(isVisible = true, hasBackNavigation = true, title = title))
     }
 
     fun resentCode() {

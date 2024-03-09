@@ -24,7 +24,7 @@ class ConfirmSMSCodeFragment :
 
     @Inject
     lateinit var factory: ConfirmSMSCodeViewModel.Factory
-    val viewModel by assistedViewModel { factory.create() }
+    private val viewModel by assistedViewModel { factory.create() }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -34,6 +34,7 @@ class ConfirmSMSCodeFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setupToolbar(getString(R.string.title_toolbar))
         setupTimerResendCode()
 
     }

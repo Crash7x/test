@@ -1,5 +1,6 @@
 package com.example.test.common.data.di
 
+import com.example.test.common.application.di.ApplicationScope
 import com.example.test.common.data.interceptor.RequestInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -11,35 +12,34 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import timber.log.Timber
-import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
-    @Singleton
+    @ApplicationScope
     @Provides
     fun provideJson(): Json {
         return Json { ignoreUnknownKeys = true }
     }
 
-    @Singleton
+    @ApplicationScope
     @Provides
     fun provideConvertJson(json: Json): Converter.Factory {
         val contentType = "application/json".toMediaType()
         return json.asConverterFactory(contentType)
     }
 
-    @Singleton
+    @ApplicationScope
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor { message: String? -> Timber.tag("network").i("LOG_BASIC $message") }
             .setLevel(HttpLoggingInterceptor.Level.BASIC)
 
-    @Singleton
+    @ApplicationScope
     @Provides
     fun provideRequestInterceptor() = RequestInterceptor()
 
-    @Singleton
+    @ApplicationScope
     @Provides
     fun provideOkHttpClient(
         requestInterceptor: RequestInterceptor,
@@ -50,7 +50,7 @@ class NetworkModule {
             .addInterceptor(httpLogInterceptor)
             .build()
 
-    @Singleton
+    @ApplicationScope
     @Provides
     fun retrofit(
         okHttpClient: OkHttpClient,

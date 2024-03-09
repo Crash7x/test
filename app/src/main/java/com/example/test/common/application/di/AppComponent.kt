@@ -3,21 +3,25 @@ package com.example.test.common.application.di
 import android.app.Application
 import com.example.test.common.application.TestApplication
 import com.example.test.common.data.di.NetworkModule
+import com.example.test.common.observable.di.ObservableModule
+import com.example.test.common.observable.toolbar.ToolbarFlow
 import dagger.BindsInstance
 import dagger.Component
 import retrofit2.Retrofit
-import javax.inject.Singleton
 
-@Singleton
+@ApplicationScope
 @Component(
     modules = [
         AppModule::class,
-        NetworkModule::class
+        NetworkModule::class,
+        ObservableModule::class
     ]
 )
 interface AppComponent {
 
     fun getRetrofit(): Retrofit
+
+    fun getToolbarFlow(): ToolbarFlow
 
     fun inject(app: TestApplication)
 
