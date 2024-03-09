@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         DaggerMainActivityComponent.factory().create(appComponent).inject(this)
         setContentView(binding.root)
         setupToolbar()
+        setupLoader()
     }
 
     private fun setupToolbar() {
@@ -42,6 +43,13 @@ class MainActivity : AppCompatActivity() {
             if (!it.isVisible) return@observe
             binding.toolbar.navigateBack.isVisible = it.hasBackNavigation
             binding.toolbar.title.text = it.title
+        }
+    }
+
+    private fun setupLoader() {
+        viewModel.loader.observe(this) {
+            binding.loader.isVisible = it
+            binding.navHostFragment.isVisible = !it
         }
     }
 }
