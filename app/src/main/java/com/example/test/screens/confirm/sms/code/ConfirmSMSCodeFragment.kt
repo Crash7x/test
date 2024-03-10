@@ -15,6 +15,7 @@ import com.example.test.common.extensions.observe
 import com.example.test.common.view.model.factory.assistedViewModel
 import com.example.test.databinding.FragmentConfirmSmsCodeBinding
 import com.example.test.screens.confirm.sms.code.di.DaggerConfirmSMSCodeComponent
+import com.example.test.screens.confirm.sms.code.domain.model.ErrorSmsCode
 import com.example.test.screens.confirm.sms.code.domain.model.TimerState
 import javax.inject.Inject
 
@@ -35,8 +36,31 @@ class ConfirmSMSCodeFragment : BindingFragment<FragmentConfirmSmsCodeBinding>(Fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setupToolbar(getString(R.string.title_toolbar))
+        setupConfirmationCodeSms()
         setupTimerResendCode()
 
+    }
+
+    private fun setupConfirmationCodeSms() {
+        binding.codeSms.setOnChangeListener { code, isComplete  ->
+            if (isComplete) viewModel.sentCode(code)
+            binding.errorDescription.isVisible = false
+        }
+        viewModel.errorCodeSms.observe(viewLifecycleOwner) {
+            handleErrorSmsCode(it)
+        }
+    }
+
+    private fun handleErrorSmsCode(error: ErrorSmsCode) {
+        when (error) {
+            is ErrorSmsCode.IncorrectSmsCode -> setErrorSmsCode(error.descriptionErrorId)
+        }
+    }
+
+    private fun setErrorSmsCode(descriptionErrorId: Int) {
+        binding.errorDescription.text = getString(descriptionErrorId)
+        binding.errorDescription.isVisible = true
+        binding.codeSms.setError(requireContext().getColor(R.color.red))
     }
 
     private fun setupTimerResendCode() {

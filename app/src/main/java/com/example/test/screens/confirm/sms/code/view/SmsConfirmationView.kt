@@ -7,6 +7,8 @@ import android.view.KeyEvent
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Space
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.Px
 import androidx.core.content.res.ResourcesCompat
 import com.example.test.R
@@ -24,14 +26,19 @@ class SmsConfirmationView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     private var style = Style.getDefault(context)
+    private var onChangeListener: OnChangeListener? = null
 
     var enteredCode: String = emptyString
         set(value) {
             val digits = value.digits()
             field = digits
+            style = style.copy(errorColor = null)
+            onChangeListener?.onCodeChange(digits, digits.length == codeLength)
             setupSymbolSubviews()
         }
 
+    //Так как по тз сказано "динамическое построение количества возможных вводимых цифр от 4 до 6",
+    // но не понятно при каких условиях, то добавлен этот параметр для возможности расширения
     var codeLength: Int = style.codeLength
         set(value) {
             field = value
@@ -113,6 +120,15 @@ class SmsConfirmationView @JvmOverloads constructor(
             requestLayout()
         }
 
+    fun setOnChangeListener(onChangeListener: OnChangeListener) {
+        this.onChangeListener = onChangeListener
+    }
+
+    fun setError(@ColorInt colorErrorId: Int) {
+        style = style.copy(errorColor = colorErrorId)
+        setupSymbolSubviews()
+    }
+
     init {
         orientation = HORIZONTAL
         isFocusable = true
@@ -166,7 +182,18 @@ class SmsConfirmationView @JvmOverloads constructor(
     }
 
     private fun addSymbolView(index: Int) {
-        val symbolView = SymbolView(context, style.symbolViewStyle)
+        val errorColor = style.errorColor
+        val style = if (errorColor != null) {
+            style.symbolViewStyle.copy(
+                lineColor = errorColor,
+                textColor = errorColor,
+                lineColorActive = errorColor
+            )
+        } else {
+            style.symbolViewStyle
+        }
+
+        val symbolView = SymbolView(context, style)
         symbolView.state = SymbolView.State(
             symbol = enteredCode.getOrNull(index),
             isActive = (index == enteredCode.length)
@@ -224,16 +251,21 @@ class SmsConfirmationView @JvmOverloads constructor(
         this.enteredCode = enteredCode.substring(0, enteredCode.length - 1)
     }
 
+    fun interface OnChangeListener {
+        fun onCodeChange(code: String, isComplete: Boolean)
+    }
 
     private data class Style(
         val codeLength: Int,
         @Px val symbolsSpacing: Int,
+        @ColorInt val errorColor: Int?,
         val symbolViewStyle: SymbolView.Style,
     ) {
         companion object {
             fun getDefault(context: Context) = Style(
                 4,
                 10.toPx(context).toInt(),
+                null,
                 SymbolView.Style.getDefault(context)
             )
         }
