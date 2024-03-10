@@ -1,4 +1,4 @@
-package com.example.test.screens.confirm.sms.code.domain.managers
+package com.example.test.screens.confirm.sms.code.domain.usecase
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +11,7 @@ import javax.inject.Inject
 const val ONE_SECONDS = 1
 const val ONE_MINUTE = 60
 
-class TimerManagerImpl @Inject constructor() : TimerManager {
+class TimerUseCaseImpl @Inject constructor() : TimerUseCase {
 
     override fun flowStartTimer(time: Int): Flow<Int> = (time downTo 0)
         .asSequence()

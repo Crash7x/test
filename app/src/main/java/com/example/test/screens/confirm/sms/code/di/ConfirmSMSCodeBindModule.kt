@@ -2,8 +2,8 @@ package com.example.test.screens.confirm.sms.code.di
 
 import com.example.test.screens.confirm.sms.code.data.network.SentCodeRepository
 import com.example.test.screens.confirm.sms.code.data.network.SentCodeRepositoryImpl
-import com.example.test.screens.confirm.sms.code.domain.managers.TimerManager
-import com.example.test.screens.confirm.sms.code.domain.managers.TimerManagerImpl
+import com.example.test.screens.confirm.sms.code.domain.usecase.TimerUseCase
+import com.example.test.screens.confirm.sms.code.domain.usecase.TimerUseCaseImpl
 import com.example.test.screens.confirm.sms.code.domain.usecase.ResentCodeUseCase
 import com.example.test.screens.confirm.sms.code.domain.usecase.ResentCodeUseCaseImpl
 import com.example.test.screens.confirm.sms.code.domain.usecase.SentCodeUseCase
@@ -24,6 +24,6 @@ interface ConfirmSMSCodeBindModule {
     fun bindResentCodeUseCase(usecase: ResentCodeUseCaseImpl): ResentCodeUseCase
 
     @Binds
-    fun bindTimerManager(usecase: TimerManagerImpl): TimerManager
+    fun bindTimerManager(usecase: TimerUseCaseImpl): TimerUseCase
 
 }

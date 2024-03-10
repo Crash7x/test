@@ -6,7 +6,7 @@ import com.example.test.common.extensions.launchOrError
 import com.example.test.common.observable.loader.LoaderFlow
 import com.example.test.common.observable.toolbar.ToolbarFlow
 import com.example.test.common.observable.toolbar.model.ToolbarData
-import com.example.test.screens.confirm.sms.code.domain.managers.TimerManager
+import com.example.test.screens.confirm.sms.code.domain.usecase.TimerUseCase
 import com.example.test.screens.confirm.sms.code.domain.model.ErrorSmsCode
 import com.example.test.screens.confirm.sms.code.domain.model.TimerState
 import com.example.test.screens.confirm.sms.code.domain.usecase.ResentCodeUseCase
@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onCompletion
 
 class ConfirmSMSCodeViewModel @AssistedInject constructor(
-    private val timerManager: TimerManager,
+    private val timerUseCase: TimerUseCase,
     private val resentCodeUseCase: ResentCodeUseCase,
     private val sentCodeUseCase: SentCodeUseCase,
     private val toolbarFlow: ToolbarFlow,
@@ -69,7 +69,7 @@ class ConfirmSMSCodeViewModel @AssistedInject constructor(
 
     private fun startTimer() {
         launchOrError {
-            timerManager.flowStartTimer()
+            timerUseCase.flowStartTimer()
                 .onCompletion {
                     _timerState.tryEmit(TimerState.Stop)
                 }

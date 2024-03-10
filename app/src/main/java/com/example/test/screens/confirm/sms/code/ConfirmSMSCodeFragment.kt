@@ -22,6 +22,7 @@ import com.example.test.screens.confirm.sms.code.domain.model.TimerState
 import javax.inject.Inject
 
 private const val SPACE = " "
+private const val TIMER_TEXT_SIZE = 14
 
 class ConfirmSMSCodeFragment : BindingFragment<FragmentConfirmSmsCodeBinding>(FragmentConfirmSmsCodeBinding::inflate) {
 
@@ -102,7 +103,7 @@ class ConfirmSMSCodeFragment : BindingFragment<FragmentConfirmSmsCodeBinding>(Fr
             time.length,
             0
         )
-        spannableTime.setSpan(AbsoluteSizeSpan(14, true), 0, time.length, 0)
+        spannableTime.setSpan(AbsoluteSizeSpan(TIMER_TEXT_SIZE, true), 0, time.length, 0)
         return spannableTime
     }
 
