@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.test.common.application.TestApplication
 import com.example.test.common.data.di.NetworkModule
 import com.example.test.common.observable.di.ObservableModule
+import com.example.test.common.observable.loader.LoaderFlow
 import com.example.test.common.observable.toolbar.ToolbarFlow
 import dagger.BindsInstance
 import dagger.Component
@@ -22,6 +23,8 @@ interface AppComponent {
     fun getRetrofit(): Retrofit
 
     fun getToolbarFlow(): ToolbarFlow
+
+    fun getLoaderFlow(): LoaderFlow
 
     fun inject(app: TestApplication)
 

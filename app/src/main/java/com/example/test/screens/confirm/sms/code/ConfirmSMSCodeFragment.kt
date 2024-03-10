@@ -19,8 +19,8 @@ import com.example.test.screens.confirm.sms.code.domain.model.TimerState
 import javax.inject.Inject
 
 private const val SPACE = " "
-class ConfirmSMSCodeFragment :
-    BindingFragment<FragmentConfirmSmsCodeBinding>(FragmentConfirmSmsCodeBinding::inflate) {
+
+class ConfirmSMSCodeFragment : BindingFragment<FragmentConfirmSmsCodeBinding>(FragmentConfirmSmsCodeBinding::inflate) {
 
     @Inject
     lateinit var factory: ConfirmSMSCodeViewModel.Factory

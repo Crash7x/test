@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -17,6 +18,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.example.test.screens.confirm.sms.code.view.SmsConfirmationView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="102dp"
+        app:code_length="4"
+        app:symbol_color="@color/black"
+        app:symbol_size="28sp"
+        app:line_width="2dp"
+        app:margin_symbol_and_line="10dp"
+        app:spacing_symbol="16dp"
+        app:line_color="@color/black"
+        app:line_color_active="@color/black"
+        android:fontFamily="@font/roboto_bold_700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/timer"
