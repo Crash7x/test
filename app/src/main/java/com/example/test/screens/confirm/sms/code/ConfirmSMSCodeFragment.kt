@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.example.test.R
 import com.example.test.common.application.appComponent
@@ -44,7 +45,7 @@ class ConfirmSMSCodeFragment : BindingFragment<FragmentConfirmSmsCodeBinding>(Fr
     private fun setupConfirmationCodeSms() {
         binding.codeSms.setOnChangeListener { code, isComplete  ->
             if (isComplete) viewModel.sentCode(code)
-            binding.errorDescription.isVisible = false
+            binding.errorDescription.isInvisible = true
         }
         viewModel.errorCodeSms.observe(viewLifecycleOwner) {
             handleErrorSmsCode(it)
@@ -59,7 +60,7 @@ class ConfirmSMSCodeFragment : BindingFragment<FragmentConfirmSmsCodeBinding>(Fr
 
     private fun setErrorSmsCode(descriptionErrorId: Int) {
         binding.errorDescription.text = getString(descriptionErrorId)
-        binding.errorDescription.isVisible = true
+        binding.errorDescription.isInvisible = false
         binding.codeSms.setError(requireContext().getColor(R.color.red))
     }
 

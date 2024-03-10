@@ -2,21 +2,30 @@ package com.example.test.screens.confirm.sms.code.view
 
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Parcel
+import android.os.Parcelable
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.ViewGroup
+import android.view.inputmethod.BaseInputConnection
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
+import android.view.inputmethod.InputConnectionWrapper
 import android.widget.LinearLayout
 import android.widget.Space
 import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
 import androidx.annotation.Px
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.postDelayed
 import com.example.test.R
 import com.example.test.common.extensions.digits
 import com.example.test.common.extensions.hideKeyboard
 import com.example.test.common.extensions.showKeyboard
 import com.example.test.common.extensions.toPx
 import com.example.test.common.utils.emptyString
+
+private const val KEYBOARD_AUTO_SHOW_DELAY = 500L
 
 class SmsConfirmationView @JvmOverloads constructor(
     context: Context,
@@ -211,6 +220,11 @@ class SmsConfirmationView @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         setOnKeyListener { _, keyCode, event -> handleKeyEvent(keyCode, event) }
+
+        postDelayed(KEYBOARD_AUTO_SHOW_DELAY) {
+            requestFocus()
+            showKeyboard()
+        }
     }
 
 
@@ -235,6 +249,22 @@ class SmsConfirmationView @JvmOverloads constructor(
         else -> false
     }
 
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection {
+        with(outAttrs) {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            imeOptions = EditorInfo.IME_ACTION_DONE
+        }
+        return object : InputConnectionWrapper(BaseInputConnection(this, false), true) {
+
+            override fun deleteSurroundingText(beforeLength: Int, afterLength: Int): Boolean {
+                return if (beforeLength == 1 && afterLength == 0) {
+                    sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
+                            && sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
+                } else super.deleteSurroundingText(beforeLength, afterLength)
+            }
+        }
+    }
+
     private fun KeyEvent.isDigitKey(): Boolean {
         return keyCode in KeyEvent.KEYCODE_0..KeyEvent.KEYCODE_9
     }
@@ -249,6 +279,32 @@ class SmsConfirmationView @JvmOverloads constructor(
         if (enteredCode.isEmpty()) return
 
         this.enteredCode = enteredCode.substring(0, enteredCode.length - 1)
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        val superState: Parcelable? = super.onSaveInstanceState()
+        return SavedState(superState, enteredCode)
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable) {
+        if (state !is SavedState) {
+            super.onRestoreInstanceState(state)
+            return
+        }
+
+        super.onRestoreInstanceState(state.superState)
+        enteredCode = state.enteredCode
+    }
+
+    private class SavedState(
+        superState: Parcelable?,
+        val enteredCode: String
+    ) : BaseSavedState(superState) {
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeString(enteredCode)
+        }
     }
 
     fun interface OnChangeListener {
