@@ -15,6 +15,7 @@ import com.example.test.screens.confirm.sms.code.extension.toTimer
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -49,11 +50,16 @@ class ConfirmSMSCodeViewModel @AssistedInject constructor(
             loaderFlow.tryEmit(false)
         }) {
             loaderFlow.tryEmit(true)
+            //Добавлен для демострации показа лоадера так как ошибка падает мнгновенно
+            //и лоадер не успевает появляться
+            delay(5000)
             sentCodeUseCase.sentCode(code)
             loaderFlow.tryEmit(false)
         }
     }
 
+    //В ошибку добавлен startTimer() потому что нет тз как действуем в этой ситуации
+    //и для демонстрации работы так как домена нет и ошибка падает постоянно
     fun resentCode() {
         launchOrError(error = { startTimer() }) {
             resentCodeUseCase.resentCode()
