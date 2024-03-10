@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import com.example.test.R
 import com.example.test.common.application.appComponent
 import com.example.test.common.binding.fragment.BindingFragment
+import com.example.test.common.extensions.hideKeyboard
 import com.example.test.common.extensions.observe
 import com.example.test.common.view.model.factory.assistedViewModel
 import com.example.test.databinding.FragmentConfirmSmsCodeBinding
@@ -44,7 +45,10 @@ class ConfirmSMSCodeFragment : BindingFragment<FragmentConfirmSmsCodeBinding>(Fr
 
     private fun setupConfirmationCodeSms() {
         binding.codeSms.setOnChangeListener { code, isComplete  ->
-            if (isComplete) viewModel.sentCode(code)
+            if (isComplete) {
+                binding.codeSms.hideKeyboard()
+                viewModel.sentCode(code)
+            }
             binding.errorDescription.isInvisible = true
         }
         viewModel.errorCodeSms.observe(viewLifecycleOwner) {

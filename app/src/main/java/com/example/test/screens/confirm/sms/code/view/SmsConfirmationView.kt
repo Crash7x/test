@@ -192,6 +192,8 @@ class SmsConfirmationView @JvmOverloads constructor(
         style = style.copy(errorColor = colorErrorId)
         setupSymbolSubviews()
         invalidate()
+        requestFocus()
+        showKeyboard()
     }
 
     init {
