@@ -64,7 +64,7 @@ internal class SymbolView(context: Context, private val symbolStyle: Style) : Vi
         val height = fontMetrics.descent - fontMetrics.ascent
         val w = resolveSizeAndState(textSize.width * 3, widthMeasureSpec, 0)
         val h = resolveSizeAndState(
-            height.toInt() * 2 + symbolStyle.marginSymbolAndLine + symbolStyle.lineWidth,
+            height.toInt() + symbolStyle.marginSymbolAndLine + symbolStyle.lineWidth,
             heightMeasureSpec,
             0
         )
@@ -83,16 +83,16 @@ internal class SymbolView(context: Context, private val symbolStyle: Style) : Vi
     override fun onDraw(canvas: Canvas) {
         canvas.drawLine(
             rect.centerX() - (rect.width() / 2),
-            rect.centerY(),
+            rect.centerY() + (rect.height() / 2),
             rect.centerX() + (rect.width() / 2),
-            rect.centerY(),
+            rect.centerY() + (rect.height() / 2),
             linePaint
         )
 
         canvas.drawText(
             state.symbol?.toString() ?: emptyString,
             rect.width() / 2 + linePaint.strokeWidth / 2,
-            rect.height() / 2 - linePaint.strokeWidth / 2 - symbolStyle.marginSymbolAndLine,
+            rect.height()  - linePaint.strokeWidth / 2 - symbolStyle.marginSymbolAndLine,
             textPaint
         )
     }
