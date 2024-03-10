@@ -1,6 +1,9 @@
 package com.example.test.screens.confirm.sms.code.view
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Typeface
 import android.os.Parcel
 import android.os.Parcelable
@@ -14,16 +17,25 @@ import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputConnectionWrapper
 import android.widget.LinearLayout
 import android.widget.Space
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.postDelayed
+import androidx.lifecycle.Lifecycle
 import com.example.test.R
 import com.example.test.common.extensions.digits
+import com.example.test.common.extensions.getActivity
 import com.example.test.common.extensions.hideKeyboard
+import com.example.test.common.extensions.registerReceiverAllApiAndroid
 import com.example.test.common.extensions.showKeyboard
 import com.example.test.common.extensions.toPx
 import com.example.test.common.utils.emptyString
+import com.example.test.screens.confirm.sms.code.view.sms.retriever.SmsParser
+import com.example.test.screens.confirm.sms.code.view.sms.retriever.SmsRetrieverContract
+import com.example.test.screens.confirm.sms.code.view.sms.retriever.SmsRetrieverReceiver
+import com.google.android.gms.auth.api.phone.SmsRetriever
 
 private const val KEYBOARD_AUTO_SHOW_DELAY = 500L
 
@@ -36,6 +48,27 @@ class SmsConfirmationView @JvmOverloads constructor(
 
     private var style = Style.getDefault(context)
     private var onChangeListener: OnChangeListener? = null
+
+    private var isReceiverRegistered: Boolean = false
+
+    private val smsBroadcastReceiver: BroadcastReceiver = object : SmsRetrieverReceiver() {
+        override fun onConsentIntentRetrieved(intent: Intent) {
+            smsRetrieverResultLauncher?.run {
+                hideKeyboard()
+                launch(intent)
+            }
+        }
+    }
+
+    private val activityResultCallback = ActivityResultCallback<String?> { smsContent ->
+        val view = this@SmsConfirmationView
+        smsContent?.takeIf { it.isBlank().not() }
+            ?.let { sms ->
+                view.enteredCode = SmsParser.parseOneTimeCode(sms, view.codeLength).orEmpty()
+            }
+    }
+
+    private var smsRetrieverResultLauncher: ActivityResultLauncher<Intent>? = null
 
     var enteredCode: String = emptyString
         set(value) {
@@ -130,6 +163,27 @@ class SmsConfirmationView @JvmOverloads constructor(
             requestLayout()
         }
 
+    var detectionMode: SmsDetectionMode = style.smsDetectionMode
+        set(value) {
+            field = value
+            style = style.copy(smsDetectionMode = value)
+            setSmsDetectionMode(value)
+            invalidate()
+            requestLayout()
+        }
+
+    private fun setSmsDetectionMode(smsDetectionMode: SmsDetectionMode) {
+        if (smsDetectionMode != SmsDetectionMode.DISABLED) {
+            smsRetrieverResultLauncher = getActivity()
+                ?.takeIf { it.lifecycle.currentState < Lifecycle.State.STARTED }
+                ?.registerForActivityResult(SmsRetrieverContract(), activityResultCallback)
+
+            startListeningForIncomingMessagesInternal()
+        } else {
+            unregisterSmsReciver()
+        }
+    }
+
     fun setOnChangeListener(onChangeListener: OnChangeListener) {
         this.onChangeListener = onChangeListener
     }
@@ -161,6 +215,7 @@ class SmsConfirmationView @JvmOverloads constructor(
         lineWidth = attributes.getDimensionPixelSize(R.styleable.SmsConfirmationView_line_width, lineWidth)
         marginSymbolAndLine = attributes.getDimensionPixelSize(R.styleable.SmsConfirmationView_margin_symbol_and_line, marginSymbolAndLine)
         spacingSymbol = attributes.getDimensionPixelSize(R.styleable.SmsConfirmationView_spacing_symbol, spacingSymbol)
+        detectionMode =  SmsDetectionMode.valueOf(attributes.getInteger(R.styleable.SmsConfirmationView_sms_detection_mode, style.smsDetectionMode.ordinal))
 
         setListener()
 
@@ -217,6 +272,18 @@ class SmsConfirmationView @JvmOverloads constructor(
             layoutParams = ViewGroup.LayoutParams(style.symbolsSpacing, 0)
         }
         addView(space)
+    }
+
+    private fun startListeningForIncomingMessagesInternal() {
+        context.registerReceiverAllApiAndroid(
+            smsBroadcastReceiver,
+            IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
+            SmsRetriever.SEND_PERMISSION
+        )
+
+        SmsRetriever.getClient(context).startSmsUserConsent(null)
+
+        isReceiverRegistered = true
     }
 
     override fun onAttachedToWindow() {
@@ -298,6 +365,17 @@ class SmsConfirmationView @JvmOverloads constructor(
         enteredCode = state.enteredCode
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        unregisterSmsReciver()
+    }
+
+    private fun unregisterSmsReciver() {
+        if (isReceiverRegistered) {
+            context.unregisterReceiver(smsBroadcastReceiver)
+        }
+    }
+
     private class SavedState(
         superState: Parcelable?,
         val enteredCode: String
@@ -318,14 +396,30 @@ class SmsConfirmationView @JvmOverloads constructor(
         @Px val symbolsSpacing: Int,
         @ColorInt val errorColor: Int?,
         val symbolViewStyle: SymbolView.Style,
+        val smsDetectionMode: SmsDetectionMode,
     ) {
         companion object {
             fun getDefault(context: Context) = Style(
                 4,
                 10.toPx(context).toInt(),
                 null,
-                SymbolView.Style.getDefault(context)
+                SymbolView.Style.getDefault(context),
+                SmsDetectionMode.DISABLED
             )
+        }
+    }
+
+    enum class SmsDetectionMode {
+        DISABLED,
+        AUTO;
+
+        companion object {
+            fun valueOf(value: Int) =
+                when(value) {
+                    AUTO.ordinal -> AUTO
+                    DISABLED.ordinal -> DISABLED
+                    else -> DISABLED
+                }
         }
     }
 }

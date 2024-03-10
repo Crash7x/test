@@ -27,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        app:sms_detection_mode="auto"
         app:code_length="4"
         app:symbol_color="@color/black"
         app:symbol_size="28sp"

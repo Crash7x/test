@@ -14,6 +14,8 @@ jsonSerialization = "1.6.2"
 appcompat = "1.6.1"
 timber = "5.0.1"
 navigation = "2.7.7"
+playServicesAuth = "21.0.0"
+playServicesAuthApiPhone = "18.0.2"
 
 [libraries]
 
@@ -43,6 +45,9 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 navigation-dynamic-features-fragment = { group = "androidx.navigation", name = "navigation-dynamic-features-fragment", version.ref = "navigation" }
+
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
+play-services-auth-api-phone = { group = "com.google.android.gms", name = "play-services-auth-api-phone", version.ref = "playServicesAuthApiPhone" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

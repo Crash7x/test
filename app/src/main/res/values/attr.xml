@@ -10,5 +10,9 @@
         <attr name="android:fontFamily"/>
         <attr name="margin_symbol_and_line" format="dimension"/>
         <attr name="spacing_symbol" format="dimension"/>
+        <attr name="sms_detection_mode" format="enum">
+            <enum name="disable" value="0" />
+            <enum name="auto" value="1" />
+        </attr>
     </declare-styleable>
 </resources>

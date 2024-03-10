@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     implementation(libs.navigation.dynamic.features.fragment)
     implementation(libs.navigation.fragment.ktx)
+    implementation(libs.play.services.auth.api.phone)
+    implementation(libs.play.services.auth)
     kapt(libs.dagger.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
