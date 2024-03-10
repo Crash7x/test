@@ -42,8 +42,9 @@ class SmsConfirmationView @JvmOverloads constructor(
             val digits = value.digits()
             field = digits
             style = style.copy(errorColor = null)
-            onChangeListener?.onCodeChange(digits, digits.length == codeLength)
             setupSymbolSubviews()
+            onChangeListener?.onCodeChange(digits, digits.length == codeLength)
+            requestFocus()
         }
 
     //Так как по тз сказано "динамическое построение количества возможных вводимых цифр от 4 до 6",
@@ -136,6 +137,7 @@ class SmsConfirmationView @JvmOverloads constructor(
     fun setError(@ColorInt colorErrorId: Int) {
         style = style.copy(errorColor = colorErrorId)
         setupSymbolSubviews()
+        invalidate()
     }
 
     init {
