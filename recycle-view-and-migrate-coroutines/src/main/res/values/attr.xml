@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SmsConfirmationView">
-        <attr name="code_length" format="integer"/>
-        <attr name="symbol_size" format="dimension"/>
-        <attr name="line_width" format="dimension"/>
-        <attr name="symbol_color" format="color"/>
-        <attr name="line_color" format="color"/>
-        <attr name="line_color_active" format="color"/>
-        <attr name="android:fontFamily"/>
-        <attr name="margin_symbol_and_line" format="dimension"/>
-        <attr name="spacing_symbol" format="dimension"/>
-        <attr name="sms_detection_mode" format="enum">
-            <enum name="disable" value="0" />
-            <enum name="auto" value="1" />
-        </attr>
-    </declare-styleable>
+
 </resources>

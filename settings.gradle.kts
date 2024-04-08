@@ -13,5 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Test"
-include(":input-code-from-sms")
 include(":recycle-view-and-migrate-coroutines")

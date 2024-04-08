@@ -1,5 +1,6 @@
 package com.example.test.common.data.di
 
+import com.example.recycle.view.and.migrate.coroutines.BuildConfig
 import com.example.test.common.application.di.ApplicationScope
 import com.example.test.common.data.interceptor.RequestInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -57,8 +58,7 @@ class NetworkModule {
         kotlinConverterFactory: Converter.Factory
     ): Retrofit =
         Retrofit.Builder()
-            //Так как домен не был дан, оставил stub
-            .baseUrl("http://test/v1/")
+            .baseUrl(BuildConfig.URL_API)
             .client(okHttpClient)
             .addConverterFactory(kotlinConverterFactory)
             .build()

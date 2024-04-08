@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.android.navigation.safeargs)
 }
 
 android {
@@ -20,6 +21,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField(
+            "String",
+            "URL_API",
+            "\"https://rickandmortyapi.com/api/\""
+        )
     }
 
     buildTypes {
@@ -40,7 +47,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
-
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -69,6 +76,8 @@ dependencies {
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.play.services.auth.api.phone)
     implementation(libs.play.services.auth)
+    implementation(libs.coil)
+    implementation(libs.coil.svg)
     kapt(libs.dagger.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

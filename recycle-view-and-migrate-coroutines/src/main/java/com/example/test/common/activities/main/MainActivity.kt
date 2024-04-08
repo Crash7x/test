@@ -29,21 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         DaggerMainActivityComponent.factory().create(appComponent).inject(this)
         setContentView(binding.root)
-        setupToolbar()
         setupLoader()
-    }
-
-    private fun setupToolbar() {
-        binding.toolbar.navigateBack.setOnClickListener {
-            navController.navigateUp()
-        }
-
-        viewModel.toolbarData.observe(this) {
-            binding.toolbar.root.isVisible = it.isVisible
-            if (!it.isVisible) return@observe
-            binding.toolbar.navigateBack.isVisible = it.hasBackNavigation
-            binding.toolbar.title.text = it.title
-        }
     }
 
     private fun setupLoader() {

@@ -1,10 +1,8 @@
 <resources>
-    <string name="app_name">Test</string>
+    <string name="app_name">RecycleViewAndMigrateCoroutines</string>
 
-    <!-- confirm sms code fragment -->
-    <string name="title_toolbar">Вход в мобильный банк</string>
-    <string name="title_confirm_sms">Введите код,\nполученный из SMS</string>
-    <string name="resend_sms_code">Отправить код повторно</string>
-    <string name="timer_sms_code">Отправить код повторно через</string>
-    <string name="error_sms_code">Код неверный, проверьте введенные данные</string>
+    <string name="name">Name</string>
+    <string name="last_location">Last known location:</string>
+    <string name="gender">Gender:</string>
+    <string name="status_species">%s - %s</string>
 </resources>

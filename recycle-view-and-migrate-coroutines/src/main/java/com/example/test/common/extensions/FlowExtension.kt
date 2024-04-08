@@ -8,10 +8,16 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
+
+fun <T> createMutableSingleEventFlow(): MutableSharedFlow<T> =
+    MutableSharedFlow(0, 1, BufferOverflow.DROP_OLDEST)
+
 
 inline fun ViewModel.launchOrError(
     context: CoroutineContext? = null,
