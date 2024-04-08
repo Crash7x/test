@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/roboto_bold_700"
+        android:text="@string/title_confirm_sms"
+        android:textColor="@color/black"
+        android:textSize="28sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_height="0dp"/>
+
+
+    <com.example.test.screens.confirm.sms.code.view.SmsConfirmationView
+        android:id="@+id/code_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:sms_detection_mode="auto"
+        app:code_length="4"
+        app:symbol_color="@color/black"
+        app:symbol_size="28sp"
+        app:line_width="2dp"
+        app:margin_symbol_and_line="10dp"
+        app:spacing_symbol="16dp"
+        app:line_color="@color/black"
+        app:line_color_active="@color/black"
+        android:fontFamily="@font/roboto_bold_700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/error_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="invisible"
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/roboto_bold_700"
+        android:textColor="@color/red"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/code_sms" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_weight="6"
+        android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:fontFamily="@font/roboto_bold_700"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/resend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resend_sms_code"
+            android:textSize="12sp"
+            android:fontFamily="@font/roboto_bold_700"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </FrameLayout>
+
+
+
+</LinearLayout>
