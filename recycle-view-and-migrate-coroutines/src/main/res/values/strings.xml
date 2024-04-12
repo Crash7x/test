@@ -11,4 +11,7 @@
     <string name="air_date">Air date:</string>
     <string name="location">Location</string>
     <string name="episode">Episode</string>
+
+    <string name="characters_fragment_toolbar_title">Characters</string>
+    <string name="character_detail_fragment_toolbar_title">Character detail</string>
 </resources>
