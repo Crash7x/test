@@ -13,6 +13,7 @@ import com.example.test.common.generic.list.adapter.Item
 import com.example.test.common.navigation.safeNavigate
 import com.example.test.common.view.model.factory.assistedViewModel
 import com.example.test.screens.characters.adapter.CharacterHolderFactory
+import com.example.test.screens.detail.character.adapter.CharacterDetailHolderFactory
 import com.example.test.screens.characters.di.DaggerCharactersComponent
 import com.example.test.screens.characters.domain.mapper.toItemList
 import javax.inject.Inject

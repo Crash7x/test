@@ -8,8 +8,7 @@ import com.example.test.screens.detail.character.CharactersDetailFragment
 @CharacterDetailScope
 @Component(
     modules = [
-        CharacterDetailBindModule::class,
-        CharacterDetailProvideModule::class
+        CharacterDetailBindModule::class
     ],
     dependencies = [AppComponent::class]
 )

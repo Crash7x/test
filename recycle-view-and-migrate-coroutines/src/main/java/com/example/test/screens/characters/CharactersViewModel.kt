@@ -2,7 +2,7 @@ package com.example.test.screens.characters
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.test.common.domain.model.Character
+import com.example.test.common.domain.model.character.Character
 import com.example.test.common.extensions.createMutableSingleEventFlow
 import com.example.test.common.extensions.launchOrError
 import com.example.test.common.navigation.NavCommand

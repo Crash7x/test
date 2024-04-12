@@ -6,6 +6,7 @@ import coil.load
 import com.example.recycle.view.and.migrate.coroutines.R
 import com.example.recycle.view.and.migrate.coroutines.databinding.ItemCharacterBinding
 import com.example.test.common.generic.list.adapter.BindingViewHolder
+import com.example.test.screens.detail.character.adapter.character.detail.CharacterDetailItem
 
 class CharacterViewHolder(
     private val binding: ItemCharacterBinding
@@ -32,7 +33,7 @@ class CharacterViewHolder(
     }
 
     private fun setupLocation(item: CharacterItem) {
-        binding.location.text = item.character.location.name
+        binding.location.text = item.character.characterLocation.name
     }
 
     private fun setupGender(item: CharacterItem) {

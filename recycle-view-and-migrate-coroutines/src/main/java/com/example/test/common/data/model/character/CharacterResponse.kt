@@ -11,7 +11,7 @@ data class CharacterResponse(
     val type: String,
     val gender: String,
     val origin: OriginalResponse,
-    val location: LocationResponse,
+    val location: CharacterLocationResponse,
     val image: String,
     val episode: List<String>,
     val url: String

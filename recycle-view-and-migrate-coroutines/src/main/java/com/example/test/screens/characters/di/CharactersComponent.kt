@@ -7,8 +7,7 @@ import com.example.test.screens.characters.CharactersFragment
 @CharactersScope
 @Component(
     modules = [
-        CharactersBindModule::class,
-        CharactersProvideModule::class
+        CharactersBindModule::class
     ],
     dependencies = [AppComponent::class]
 )

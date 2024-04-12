@@ -1,6 +1,6 @@
 package com.example.test.screens.characters.domain.usecase
 
-import com.example.test.screens.characters.data.network.CharactersRepository
+import com.example.test.common.data.network.character.CharactersRepository
 import javax.inject.Inject
 
 class GetCharactersUseCaseImpl @Inject constructor(

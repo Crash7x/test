@@ -4,5 +4,11 @@
     <string name="name">Name</string>
     <string name="last_location">Last known location:</string>
     <string name="gender">Gender:</string>
+    <string name="type">Type:</string>
+    <string name="origin">Origin location:</string>
     <string name="status_species">%s - %s</string>
+
+    <string name="air_date">Air date:</string>
+    <string name="location">Location</string>
+    <string name="episode">Episode</string>
 </resources>
