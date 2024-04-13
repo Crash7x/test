@@ -12,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import timber.log.Timber
 
 @Module
@@ -60,6 +61,7 @@ class NetworkModule {
         Retrofit.Builder()
             .baseUrl(BuildConfig.URL_API)
             .client(okHttpClient)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(kotlinConverterFactory)
             .build()
 }

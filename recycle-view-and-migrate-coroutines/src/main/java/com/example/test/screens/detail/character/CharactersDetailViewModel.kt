@@ -1,5 +1,6 @@
 package com.example.test.screens.detail.character
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.test.common.extensions.launchOrError
 import com.example.test.common.observable.loader.LoaderFlow
@@ -22,7 +23,9 @@ class CharactersDetailViewModel @AssistedInject constructor(
     val characterDetail = _characterDetail.asStateFlow().filterNotNull()
 
     fun loadData() {
-        launchOrError {
+        launchOrError(error = {
+            Log.d("fff","2 error ${it.localizedMessage}")
+        }) {
             loaderFlow.tryEmit(true)
             val characters = getCharacterDetailUseCase.getCharacterDetail(characterId)
             _characterDetail.value = characters

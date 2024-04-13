@@ -1,11 +1,12 @@
 package com.example.test.common.data.network.character
 
 import com.example.test.common.domain.model.character.Character
+import io.reactivex.Single
 
 interface CharactersRepository {
-    suspend fun getCharacters(): List<Character>
+    fun getCharacters(): Single<List<Character>>
 
-    suspend fun getSingleCharacter(id: Int): Character
+    fun getSingleCharacter(id: Int): Single<Character>
 
-    suspend fun getCharacterIds(id: List<Int>): List<Character>
+    fun getCharacterIds(id: List<Int>): Single<List<Character>>
 }

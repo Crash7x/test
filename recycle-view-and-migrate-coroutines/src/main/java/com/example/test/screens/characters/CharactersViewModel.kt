@@ -29,7 +29,7 @@ class CharactersViewModel @AssistedInject constructor(
 
     fun loadData() {
         launchOrError(error = {
-            Log.d("fff","error ${it.localizedMessage}")
+            Log.d("fff","1 error ${it.localizedMessage}")
         }) {
             loaderFlow.tryEmit(true)
             val characters = getCharactersUseCase.getCharacters()

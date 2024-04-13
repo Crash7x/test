@@ -17,6 +17,9 @@ navigation = "2.7.7"
 playServicesAuth = "21.0.0"
 playServicesAuthApiPhone = "18.0.2"
 coil = "2.5.0"
+rxAndroid = "2.1.1"
+rxJava = "2.2.19"
+coroutinesRxJava = "0.24.0"
 
 [libraries]
 
@@ -28,6 +31,7 @@ navigation-safe-args-gradle-plugin = { group = "androidx.navigation", name = "na
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-adapter = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "retrofit" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 retrofit-kotlinx-serialization-converter = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitSerializationConverter" }
@@ -53,6 +57,10 @@ play-services-auth-api-phone = { group = "com.google.android.gms", name = "play-
 
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
+
+rx-java = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rxJava" }
+rx-android = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxAndroid" }
+kotlinx-coroutines-rx2 = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-rx2", version.ref = "coroutinesRxJava" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
